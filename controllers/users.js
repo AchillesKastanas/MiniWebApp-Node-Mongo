@@ -138,6 +138,19 @@ const updateUserByEmail = async (req, res) => {
 	}
 };
 
+const deleteUserById = async (req, res) => {
+	try {
+		const id = req.params.id;
+		const deletedUser = await User.findByIdAndDelete(id);
+		if (!deletedUser) {
+			res.status(404).json({ message: "User not found" });
+		}
+		res.json({ message: "User deleted successfully" });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
 // Export the middleware and controller functions
 module.exports = {
 	checkAge,
@@ -149,4 +162,5 @@ module.exports = {
 	getUsersByName,
 	updateUserById,
 	updateUserByEmail,
+	deleteUserById,
 };

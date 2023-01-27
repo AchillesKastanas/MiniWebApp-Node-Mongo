@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const usersRouter = require("./routes/users");
+const museumsRouter = require("./routes/museums");
 const User = require("./models/user");
 const Museum = require("./models/museum");
 
 const app = express();
 app.use(bodyParser.json());
 app.use("/users", usersRouter);
+app.use("/museums", museumsRouter);
 
 // Connect to MongoDB
 mongoose.connect(
