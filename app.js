@@ -16,7 +16,7 @@ app.use("/museums", museumsRouter);
 
 // Connect to MongoDB
 mongoose.connect(
-	process.env.MONGO_URI,
+	"mongodb://127.0.0.1:27017/mydb",
 	{ useNewUrlParser: true },
 	(err, connection) => {
 		// if (err) {

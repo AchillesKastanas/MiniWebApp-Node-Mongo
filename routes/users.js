@@ -11,6 +11,6 @@ router.get("/getByAge/:age", usersController.getUsersByAge);
 router.get("/getByName/:name", usersController.getUsersByName);
 router.put("/updateById/:id", usersController.updateUserById);
 router.put("/updateByEmail/:email", usersController.updateUserByEmail);
-router.delete("/deleteUser/:id", deleteUserById);
+router.delete("/deleteUser/:id", usersController.deleteUserById);
 
 module.exports = router;
