@@ -2,35 +2,30 @@ const Museum = require("../models/museum");
 
 // Create a new museum
 const createMuseum = (req, res) => {
-	Museum.findOne(
-		{ title: req.body.title.toLowerCase() },
-		(err, existingMuseum) => {
+	Museum.findOne({ title: req.body.title }, (err, existingMuseum) => {
+		if (err) {
+			return res.status(500).json({ message: err });
+		}
+		if (existingMuseum) {
+			return res.status(400).json({ message: "Museum already exists" });
+		}
+		if (!req.body.title || !req.body.location || !req.body.founded) {
+			return res.status(400).json({
+				message: "Title, location, and founded are required",
+			});
+		}
+		const museum = new Museum({
+			title: req.body.title,
+			location: req.body.location,
+			founded: req.body.founded,
+		});
+		museum.save((err) => {
 			if (err) {
 				return res.status(500).json({ message: err });
 			}
-			if (existingMuseum) {
-				return res
-					.status(400)
-					.json({ message: "Museum already exists" });
-			}
-			if (!req.body.title || !req.body.location || !req.body.founded) {
-				return res.status(400).json({
-					message: "Title, location, and founded are required",
-				});
-			}
-			const museum = new Museum({
-				title: req.body.title,
-				location: req.body.location,
-				founded: req.body.founded,
-			});
-			museum.save((err) => {
-				if (err) {
-					return res.status(500).json({ message: err });
-				}
-				res.json({ message: "Museum created successfully" });
-			});
-		}
-	);
+			res.json({ message: "Museum created successfully" });
+		});
+	});
 };
 
 // Get all museums
